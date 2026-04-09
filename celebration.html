@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Pay - Final Edition</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0b47a8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cards-wrapper {
+            position: relative;
+            height: 350px;
+            width: 450px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-img {
+            position: absolute;
+            height: 180px;
+            width: auto;
+            border-radius: 18px;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(100px) rotate(10deg);
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+        }
+
+        #img4 { top: 80px; left: 100px; z-index: 1; }
+        #img3 { top: 60px; left: 80px; z-index: 2; }
+        #img2 { top: 40px; left: 60px; z-index: 3; }
+        #img1 { top: 20px; left: 40px; z-index: 4; }
+
+        .show-card {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+
+        .congrats-text {
+            color: white;
+            opacity: 0;
+            transition: 1s ease-in-out;
+            transform: translateY(20px);
+        }
+
+        .congrats-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 { font-size: 3.5rem; margin: 10px 0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        h2 { font-size: 1.6rem; font-weight: 400; color: #e0e0e0; }
+
+        .award { 
+            color: #ffd700; 
+            font-size: 1.3rem; 
+            margin-top: 10px; 
+            font-weight: bold; 
+        }
+
+        .winners {
+            margin-top: 15px;
+            font-size: 1.3rem;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            z-index: 1;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="cards-wrapper">
+            <img src="card_purple.png" class="card-img" id="img4">
+            <img src="card_green.png" class="card-img" id="img3">
+            <img src="card_pink.png" class="card-img" id="img2">
+            <img src="card_black.png" class="card-img" id="img1">
+        </div>
+
+        <div class="congrats-text" id="text">
+            <h1>Congratulations Champions!</h1>
+            <h2>NEXT PAY Team - 2nd Place</h2>
+            <div class="award">🏆 Tech Tank Competition - El Sewedy University 🏆</div>
+            
+            <div class="winners" id="winners"></div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => document.getElementById('img4').classList.add('show-card'), 400);
+        setTimeout(() => document.getElementById('img3').classList.add('show-card'), 800);
+        setTimeout(() => document.getElementById('img2').classList.add('show-card'), 1200);
+        setTimeout(() => document.getElementById('img1').classList.add('show-card'), 1600);
+
+        setTimeout(() => {
+            document.getElementById('text').classList.add('show');
+            startCelebration();
+            startTyping();
+        }, 2400);
+
+        function startTyping() {
+            const text = "Winners: Manuel, Nour, Marina";
+            let i = 0;
+            const speed = 80;
+
+            function type() {
+                if (i < text.length) {
+                    document.getElementById("winners").innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+
+            setTimeout(type, 500); // يبدأ بعد ظهور النص الأساسي
+        }
+
+        function startCelebration() {
+            const colors = ['#ffd700', '#ffffff', '#ff5e91', '#2cd396', '#4a3aff'];
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+                confetti.style.opacity = Math.random();
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                document.body.appendChild(confetti);
+            }
+        }
+    </script>
+
+</body>
+</html>
